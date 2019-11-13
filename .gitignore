@@ -1,0 +1,10 @@
+.idea
+.vscode
+
+conf/app.conf
+conf/*.crt
+conf/*.key
+
+go.sum
+vendor
+myblog
