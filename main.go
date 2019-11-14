@@ -1,18 +1,40 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"errors"
+	"log"
+	"net/http"
+	"time"
+	"zhangcs/blog/router"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	// g := gin.New()
+	g := gin.New()
 
-	// middlwares := []gin.HandlerFunc{}
+	middlwares := []gin.HandlerFunc{}
 
-	// router.Load(g, middlwares...)
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+	router.Load(g, middlwares...)
+
+	go func() {
+		if err := pingServer(); err != nil {
+			log.Fatal("The router has no response, or it might took too long to start up.", err)
+		}
+		log.Print("The router has been deployed successfully.")
+	}()
+	log.Printf("Start to listening the incoming requests on http address: %s", ":8080")
+	log.Printf(http.ListenAndServe(":8080", g).Error())
+}
+
+func pingServer() error {
+	for i := 0; i < 2; i++ {
+		resp, err := http.Get("http://127.0.0.1:8080/sd/health")
+		if err == nil && resp.StatusCode == 200 {
+			return nil
+		}
+		log.Print("Waiting for the router, retry in 1 second.")
+		time.Sleep(time.Second)
+	}
+	return errors.New("Cannot connect to the router.")
 }
