@@ -1,6 +1,5 @@
 .idea
 .vscode
-#.gitconfig
 
 conf/my.yaml
 conf/*.crt

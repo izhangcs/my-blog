@@ -5,10 +5,12 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"zhangcs/blog/config"
 	"zhangcs/blog/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -20,9 +22,14 @@ func main() {
 	pflag.Parse()
 
 	// 初始化配置
+	if err := config.Init(*cfg); err != nil {
+		panic(err)
+	}
 
 	//创建gin
 	g := gin.New()
+	// Set gin mode.
+	gin.SetMode(viper.GetString("runmode"))
 
 	middlwares := []gin.HandlerFunc{}
 
@@ -34,13 +41,13 @@ func main() {
 		}
 		log.Print("The router has been deployed successfully.")
 	}()
-	log.Printf("Start to listening the incoming requests on http address: %s", ":8080")
-	log.Printf(http.ListenAndServe(":8080", g).Error())
+	log.Printf("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
+	log.Printf(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }
 
 func pingServer() error {
-	for i := 0; i < 2; i++ {
-		resp, err := http.Get("http://127.0.0.1:8080/sd/health")
+	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
+		resp, err := http.Get(viper.GetString("url") + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil
 		}
