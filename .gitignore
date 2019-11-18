@@ -1,10 +1,11 @@
 .idea
 .vscode
+#.gitconfig
 
-conf/app.conf
+conf/my.yaml
 conf/*.crt
 conf/*.key
 
 go.sum
 vendor
-myblog
+blog
