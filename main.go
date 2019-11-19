@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"zhangcs/blog/config"
+	"zhangcs/blog/model"
 	"zhangcs/blog/router"
 
 	"github.com/lexkong/log"
@@ -26,6 +27,9 @@ func main() {
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
+	// 初始化数据库
+	model.DB.Init()
+	defer model.DB.Close()
 
 	//创建gin
 	g := gin.New()

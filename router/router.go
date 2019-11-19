@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 	"zhangcs/blog/handler/sd"
+	"zhangcs/blog/handler/user"
 	"zhangcs/blog/router/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,15 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
+
+	u := g.Group("/v1/user")
+	{
+		u.POST("", user.Create)
+		u.DELETE("/:id", user.Delete)
+		u.PUT("/:id", user.Update)
+		u.GET("", user.List)
+		u.GET("/:username", user.Get)
+	}
 
 	svcd := g.Group("/sd")
 	{
