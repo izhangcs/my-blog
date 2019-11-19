@@ -8,3 +8,4 @@ conf/*.key
 go.sum
 vendor
 blog
+log
