@@ -60,6 +60,11 @@ func (u *UserModel) Compare(pwd string) (err error) {
 	return auth.Compare(u.Password, pwd)
 }
 
+func (u *UserModel) Encrypt() (err error) {
+	u.Password, err = auth.Encrypt(u.Password)
+	return
+}
+
 func (u *UserModel) Validate() error {
 	// validate := validator.New()
 	// return validate.Struct(u)

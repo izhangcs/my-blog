@@ -1,38 +1,49 @@
 package user
 
 import (
-	"fmt"
-	"net/http"
+	. "zhangcs/blog/handler"
+	"zhangcs/blog/model"
 	"zhangcs/blog/pkg/errno"
+	"zhangcs/blog/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
+	"github.com/lexkong/log/lager"
 )
 
-func Create(ctx *gin.Context) {
-	var r struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+func Create(c *gin.Context) {
+	log.Info("User Create function called.", lager.Data{"X-Request-Id": util.GetReqID(c)})
+
+	var r CreateRequest
+	if err := c.Bind(&r); err != nil {
+		SendResponse(c, errno.ErrBind, nil)
 	}
 
-	var err error
-	if err := ctx.Bind(&r); err != nil {
-		ctx.Abort()
-		ctx.JSON(http.StatusOK, gin.H{"error": errno.ErrBind})
-	}
-	log.Debugf("username is: [%s], password is: [%s]", r.Username, r.Password)
-	if r.Username == "" {
-		err = errno.New(errno.ErrUserNotFound, fmt.Errorf("username can not found in db: xx.xx.xx.xx")).Add("This is add message.")
-		log.Errorf(err, "Get an error")
+	log.Info("bind successfully.")
+
+	u := model.UserModel{
+		Username: r.Username,
+		Password: r.Password,
 	}
 
-	if errno.IsErrUserNotFound(err) {
-		log.Debug("err type is ErrUserNotFound")
+	// Validate the data.
+	if err := u.Validate(); err != nil {
+		SendResponse(c, errno.ErrValidation, nil)
+		return
 	}
 
-	if r.Password == "" {
-		err = fmt.Errorf("password is empty")
+	if err := u.Encrypt(); err != nil {
+		SendResponse(c, errno.ErrEncrypt, nil)
+		return
 	}
-	code, message := errno.DecodeErr(err)
-	ctx.JSON(http.StatusOK, gin.H{"code": code, "message": message})
+
+	if err := u.Create(); err != nil {
+		SendResponse(c, errno.ErrDatabase, nil)
+		return
+	}
+	rsp := CreateResponse{
+		Username: r.Username,
+	}
+
+	SendResponse(c, nil, rsp)
 }
