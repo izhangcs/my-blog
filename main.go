@@ -7,6 +7,7 @@ import (
 	"zhangcs/blog/config"
 	"zhangcs/blog/model"
 	"zhangcs/blog/router"
+	"zhangcs/blog/router/middleware"
 
 	"github.com/lexkong/log"
 
@@ -36,7 +37,10 @@ func main() {
 	// Set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
 
-	middlwares := []gin.HandlerFunc{}
+	middlwares := []gin.HandlerFunc{
+		middleware.Logging(),
+		middleware.RequestId(),
+	}
 
 	router.Load(g, middlwares...)
 
@@ -46,6 +50,15 @@ func main() {
 		}
 		log.Info("The router has been deployed successfully.")
 	}()
+
+	cert := viper.GetString("tls.cert")
+	key := viper.GetString("tls.key")
+	if cert != "" && key != "" {
+		go func() {
+			log.Infof("Start to listening the incoming requests on https address: %s", viper.GetString("tls.addr"))
+			log.Info(http.ListenAndServeTLS(viper.GetString("tls.addr"), cert, key, g).Error())
+		}()
+	}
 	log.Infof("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
 	log.Info(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }

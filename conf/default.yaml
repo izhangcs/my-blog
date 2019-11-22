@@ -3,6 +3,7 @@ addr: :8080                 # 端口
 name: blog 
 url: http://127.0.0.1:8080  # pingServer函数请求的API服务器的ip:port
 max_ping_count: 10          # pingServer函数尝试的次数
+jwt_secret: r9c4xDC45tmvqvbV*w^AG^Ik
 log:
   writers: file,stdout
   logger_level: DEBUG
@@ -14,12 +15,11 @@ log:
   log_backup_count: 7
 db:
   name: blog
-  addr: 127.0.0.1:3306
-  username: root
-  password: root
-docker_db:
-  name: blog
-  addr: 127.0.0.1:3306
+  addr: 127.0.0.1
   username: root
   password: root
 gormlog: true 
+tls:
+  addr: :8081
+  cert: conf/server.crt
+  key: conf/server.key
