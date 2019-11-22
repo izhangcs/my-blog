@@ -1,11 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"os"
 	"time"
 	"zhangcs/blog/config"
 	"zhangcs/blog/model"
+	v "zhangcs/blog/pkg/version"
 	"zhangcs/blog/router"
 	"zhangcs/blog/router/middleware"
 
@@ -17,12 +21,19 @@ import (
 )
 
 var (
-	cfg = pflag.StringP("config", "c", "", "配置文件路径")
+	cfg     = pflag.StringP("config", "c", "", "配置文件路径")
+	version = pflag.BoolP("version", "v", false, "显示版本信息")
 )
 
 func main() {
 	// 初始化配置
 	pflag.Parse()
+
+	// 显示版本信息
+	if *version {
+		showVersion()
+		return
+	}
 
 	// 初始化配置
 	if err := config.Init(*cfg); err != nil {
@@ -73,4 +84,15 @@ func pingServer() error {
 		time.Sleep(time.Second)
 	}
 	return errors.New("Cannot connect to the router.")
+}
+
+func showVersion() {
+	v := v.Get()
+	marshalled, err := json.MarshalIndent(&v, "", "  ")
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Println(string(marshalled))
 }
