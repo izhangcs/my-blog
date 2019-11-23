@@ -1,5 +1,4 @@
-shell := /bin/bash 
-BASEDIR := $(shell pwd)
+shell := /bin/bash
 
 versionDir := "zhangcs/blog/pkg/version"
 gitTag = $(shell if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];then git describe --tags --abbrev=0; else git log --pretty=format:'%h' -n 1; fi)
