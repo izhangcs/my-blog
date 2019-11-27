@@ -48,6 +48,14 @@ func main() {
 	// Set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
 
+	// basePath, err := os.Getwd()
+	// if err != nil {
+	// 	log.Fatal("获取当前路径失败", err)
+	// 	os.Exit(1)
+	// }
+
+	g.LoadHTMLGlob("views/**/*")
+	g.Static("/static", "static")
 	middlwares := []gin.HandlerFunc{
 		middleware.Logging(),
 		middleware.RequestId(),

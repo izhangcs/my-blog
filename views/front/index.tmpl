@@ -1,0 +1,36 @@
+{{ define "front/index.tmpl" }}
+	{{template "header" .}}
+    	<div class="col-md-8 col-xs-12 " id="main" role="main">
+        <article class="post-wrapper" itemscope itemtype="http://schema.org/BlogPosting">
+           <div class="row">
+               <div class="col-md-12">
+                   <h3><a class="title-link" itemprop="url" title="" href=""> awk案例 </a></h3>
+               </div>
+               <div class="col-md-4 ">
+                   <a href="<?php $this->permalink() ?>">
+                        <img src="" alt="文章缩略图" class="post-thumb-image img-thumbnail">
+                    </a>
+               </div>
+               <div class="col-md-8">
+                   <div class="post-content" itemprop="articleBody">
+                        介绍 这些案例是我收集起来的，大多都是我自己遇到过的，有些比较经典，有些比较具有代表性。 这些awk案例我也录了相关视频的讲解 "awk 18个经典实战案例精讲" ，欢迎大家去瞅瞅。 插入几个新字段 在"a b c d"的b后面插入3个字段 。 格式化空白 移除每行的前缀、后缀空白，并将各部分左对
+                   </div>
+               </div>
+               <div class="col-md-12 post-meta">
+                   <ul class="">
+                       <li>时间：<time datetime="" itemprop="datePublished">1970-01-01 02:01:53</time></li>
+                       <li itemprop="author" itemscope itemtype="http://schema.org/Person">作者： <a itemprop="name" href="" rel="author">zhangcs</a></li>
+                       <li>分类：GoLang,Nginx</li>
+                       <li class="float-right">
+                           <a href="" class="float-right">阅读全文</a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+        </article>
+		<nav  aria-label="Page navigation ">	
+		</nav>
+	</div>
+	{{template "footer" }}
+{{ end }}
+

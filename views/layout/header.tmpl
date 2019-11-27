@@ -1,0 +1,50 @@
+{{ define "header" }}
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/prism.css">
+    <script src="/static/js/jquery-2.2.1.min.js"></script>
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.goup.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/app.js"></script>
+    <header id="header" class="clearfix">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+        <div class="container">
+                <a class="navbar-brand" href="" title="">七步</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="">首页 <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <form method="post" action="" class="search-form form-inline">
+                            <div class="form-group">
+                                <input type="search" name="s" class="form-control form-control-sm"/>
+                                <button class="btn btn-info btn-sm">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+    </nav>
+</header>
+<div id="body">
+    <div class="container main-wrapper">
+        <div class="row">
+{{ end }}
+
