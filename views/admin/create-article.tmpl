@@ -1,0 +1,82 @@
+{{ define "admin/create-article.tmpl" }}
+	{{template "header" .}}
+    <style>
+        body > #standalone-container {
+            margin: 50px auto;
+            max-width: 720px;
+        }
+        #editor-container {
+            height: 350px;
+        }
+    </style>
+        <link rel="stylesheet" href="/static/css/katex.min.css" />
+        <link rel="stylesheet" href="/static/css/monokai-sublime.min.css" />
+        <link rel="stylesheet" href="/static/quill/quill.snow.css" />
+        <script src="/static/js/katex.min.js"></script>
+        <script src="/static/js/highlight.min.js"></script>
+        <script src="/static/quill/quill.min.js"></script>
+    	<div class="col-md-12">
+            <div id="standalone-container">
+                    <div id="toolbar-container">
+                        <span class="ql-formats">
+                        <select class="ql-font"></select>
+                        <select class="ql-size"></select>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-indent" value="+1"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-direction" value="rtl"></button>
+                        <select class="ql-align"></select>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-formula"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                        </span>
+                    </div>
+                <div id="editor-container"></div>
+            </div>
+        </div>
+        <script>
+            var quill = new Quill('#editor-container', {
+                modules: {
+                formula: true,
+                syntax: true,
+                toolbar: '#toolbar-container'
+                },
+                placeholder: 'Compose an epic...',
+                theme: 'snow'
+            });
+        </script>
+	{{template "footer" }}
+{{ end }}
+
+ß

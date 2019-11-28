@@ -1,0 +1,23 @@
+{{ define "admin/login.tmpl" }}
+	{{template "header" .}}
+    	<div class="col-md-4">
+            <form>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" class="form-control" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input type="password" class="form-control"  placeholder="密码">
+                </div>
+               <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 5天之内免登陆
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+        </div>
+	{{template "footer" }}
+{{ end }}
+

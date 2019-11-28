@@ -11,7 +11,6 @@ import (
 	"zhangcs/blog/model"
 	v "zhangcs/blog/pkg/version"
 	"zhangcs/blog/router"
-	"zhangcs/blog/router/middleware"
 
 	"github.com/lexkong/log"
 
@@ -56,10 +55,7 @@ func main() {
 
 	g.LoadHTMLGlob("views/**/*")
 	g.Static("/static", "static")
-	middlwares := []gin.HandlerFunc{
-		middleware.Logging(),
-		middleware.RequestId(),
-	}
+	middlwares := []gin.HandlerFunc{}
 
 	router.Load(g, middlwares...)
 

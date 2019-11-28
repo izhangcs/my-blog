@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"zhangcs/blog/handler/admin"
 	"zhangcs/blog/handler/front"
 	"zhangcs/blog/handler/sd"
 	"zhangcs/blog/handler/user"
@@ -21,6 +22,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.GET("/detail/:id", front.Detail)
 	g.GET("/404", front.NotFund)
 
+	g.GET("/admin/login", admin.Login)
+	g.GET("/admin/create-article", admin.CreateArticle)
+
 	u := g.Group("/v1/user")
 	u.Use(middleware.AuthMiddleware())
 	{
@@ -31,7 +35,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		u.GET("/:username", user.Get)
 	}
 	loadSd(g)
-	g.POST("/login", user.Login)
 	return g
 }
 
