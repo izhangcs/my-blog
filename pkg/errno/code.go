@@ -14,5 +14,5 @@ var (
 	ErrEncrypt           = &ErrNo{Code: 20101, Message: "Error occurred while encrypting the user password."}
 	ErrUserNotFound      = &ErrNo{Code: 20102, Message: "The user was not found."}
 	ErrTokenInvalid      = &ErrNo{Code: 20103, Message: "The token was invalid."}
-	ErrPasswordIncorrect = &ErrNo{Code: 20104, Message: "The password was incorrect."}
+	ErrPasswordIncorrect = &ErrNo{Code: 20104, Message: "错误的用户名或密码"}
 )

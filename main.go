@@ -12,6 +12,8 @@ import (
 	v "zhangcs/blog/pkg/version"
 	"zhangcs/blog/router"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/lexkong/log"
 
 	"github.com/gin-gonic/gin"
@@ -47,14 +49,13 @@ func main() {
 	// Set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
 
-	// basePath, err := os.Getwd()
-	// if err != nil {
-	// 	log.Fatal("获取当前路径失败", err)
-	// 	os.Exit(1)
-	// }
-
+	// 设置静态资源
 	g.LoadHTMLGlob("views/**/*")
 	g.Static("/static", "static")
+	// 开启 session
+	store := cookie.NewStore([]byte("scret"))
+	g.Use(sessions.Sessions("blog", store))
+
 	middlwares := []gin.HandlerFunc{}
 
 	router.Load(g, middlwares...)

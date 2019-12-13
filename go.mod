@@ -6,6 +6,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.7
+	github.com/gin-contrib/sessions v0.0.1
 	github.com/gin-gonic/gin v1.4.0
 	github.com/jinzhu/gorm v1.9.11
 	github.com/lexkong/log v0.0.0-20180607165131-972f9cd951fc

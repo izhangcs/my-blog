@@ -5,7 +5,6 @@ import (
 	"zhangcs/blog/handler/admin"
 	"zhangcs/blog/handler/front"
 	"zhangcs/blog/handler/sd"
-	"zhangcs/blog/handler/user"
 	"zhangcs/blog/router/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -15,26 +14,40 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.Use(gin.Recovery())
 	g.Use(mw...)
 	g.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/404")
+		c.Redirect(http.StatusFound, "/404")
 	})
 
 	g.GET("/", front.Index)
 	g.GET("/detail/:id", front.Detail)
 	g.GET("/404", front.NotFund)
 
-	g.GET("/admin/login", admin.Login)
-	g.GET("/admin/create-article", admin.CreateArticle)
+	g.GET("/e-login", admin.LoginPage)
+	g.POST("/e-login", admin.Login)
+	g.GET("/g", front.GeneratePassword)
 
-	u := g.Group("/v1/user")
-	u.Use(middleware.AuthMiddleware())
+	a := g.Group("/admin")
+	//a.Use(middleware.AuthMiddleware())
 	{
-		u.POST("", user.Create)
-		u.DELETE("/:id", user.Delete)
-		u.PUT("/:id", user.Update)
-		u.GET("", user.List)
-		u.GET("/:username", user.Get)
+		a.GET("/articles/list", admin.ListArticle)
+		// a.GET("/articles/add", admin.AddArticlePage)
+		// a.POST("/articles/add", admin.AddArticle)
+		// a.GET("/articles/edit", admin.EditArticlePage)
+		// a.POST("/articles/edit", admin.EditArticle)
 	}
 	loadSd(g)
+	return g
+}
+
+func loadAdmin(g *gin.Engine) *gin.Engine {
+	a := g.Group("/admin")
+	a.Use(middleware.AuthMiddleware())
+	{
+		a.GET("/articles/list", admin.ListArticle)
+		a.GET("/articles/add", admin.AddArticlePage)
+		a.POST("/articles/add", admin.AddArticle)
+		a.GET("/articles/edit", admin.EditArticlePage)
+		a.POST("/articles/edit", admin.EditArticle)
+	}
 	return g
 }
 

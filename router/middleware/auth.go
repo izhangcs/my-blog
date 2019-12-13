@@ -1,20 +1,23 @@
 package middleware
 
 import (
-	"zhangcs/blog/handler"
-	"zhangcs/blog/pkg/errno"
-	"zhangcs/blog/pkg/token"
+	"fmt"
+	"net/http"
 
+	"github.com/spf13/viper"
+
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if _, err := token.ParseRequest(c); err != nil {
-			handler.SendResponse(c, errno.ErrTokenInvalid, nil)
-			c.Abort()
-			return
+		session := sessions.Default(c)
+		isLogin := session.Get("username")
+		if value, ok := isLogin.(string); ok && value != "" && value == viper.GetString("admin.username") {
+			c.Next()
 		}
-		c.Next()
+		fmt.Println("test")
+		c.Redirect(http.StatusFound, "/")
 	}
 }

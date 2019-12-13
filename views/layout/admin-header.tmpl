@@ -1,4 +1,4 @@
-{{ define "header" }}
+{{ define "admin-header" }}
 <!DOCTYPE HTML>
 <html class="no-js">
 <head>
@@ -27,18 +27,15 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item ">
-                            <a class="nav-link" href="">首页 <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/admin/articles/list">文章列表</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/admin/articles/add">添加文章</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/admin/logout">退出</a>
                         </li>
                     </ul>
-                    <!-- <div class="navbar-text">
-                        <form method="post" action="" class="search-form form-inline">
-                            <div class="form-group">
-                                <input type="search" name="s" class="form-control form-control-sm"/>
-                                <button class="btn btn-info btn-sm">搜索</button>
-                            </div>
-                        </form>
-                    </div> -->
-
                 </div>
             </div>
     </nav>

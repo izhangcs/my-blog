@@ -5,40 +5,6 @@
         "license": {}
     },
     "paths": {
-        "/user": {
-            "post": {
-                "description": "Add a new user",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Add new user to the database",
-                "parameters": [
-                    {
-                        "description": "Create a new user",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/user.CreateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
-                        "schema": {
-                            "$ref": "#/definitions/user.CreateResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/user/:id": {
             "delete": {
                 "consumes": [
